@@ -3,6 +3,9 @@ import { catsData } from "./data.js"
 const EmotionRadiosDiv = document.getElementById("emotion-radios")
 const getImageBtn = document.getElementById('get-image-btn')
 const gifsOnlyOption = document.getElementById("gifs-only-option")
+const memeModalInner = document.getElementById('meme-modal-inner')
+const memeModal = document.getElementById('meme-modal')
+const memeModalCloseBtn = document.getElementById("meme-modal-close-btn")
 
 function getEmotionsArray(cats){
     const emotionsArray = []
@@ -16,7 +19,7 @@ function getEmotionsArray(cats){
     return emotionsArray
 }
 
-getImageBtn.addEventListener('click', getMatchingCatsArray)
+getImageBtn.addEventListener('click', renderCat)
 
 function getMatchingCatsArray(e) {
     const selectedItem = document.querySelector('input[type="radio"]:checked')
@@ -34,12 +37,8 @@ function getMatchingCatsArray(e) {
                 } 
             } 
         })
-        console.log(matchingCats)
-        console.log(selectedEmotion)
-        console.log(isGifsOnly)
-
+        return matchingCats
     }
-
 }
 
 EmotionRadiosDiv.addEventListener("change", highlightCheckedOption)
@@ -52,6 +51,34 @@ function highlightCheckedOption(e){
     }
     document.getElementById(e.target.id).parentElement.classList.add('highlight')
     console.log(e.target.id)
+}
+
+memeModalCloseBtn.addEventListener('click', function() {
+    memeModal.style.display = 'none'
+})
+function myFunction() {
+    alert("hello")
+}
+window.myFunction = myFunction
+function getSingleCat() {
+    const catsArray = getMatchingCatsArray()
+    if(catsArray.length===1) {
+        return catsArray[0]
+    } else {
+        const randomIndex = Math.floor(Math.random() * catsArray.length)
+        return catsArray[randomIndex]
+    }
+}
+
+function renderCat() {
+    const catObject = getSingleCat()
+    memeModalInner.innerHTML =        `
+    <img 
+    class="cat-img" 
+    src="./images/${catObject.image}"
+    alt="${catObject.alt}"
+    >`
+    memeModal.style.display = 'flex'
 }
 
 function renderEmotionsRadios(cats) {
