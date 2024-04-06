@@ -7,6 +7,12 @@ const memeModalInner = document.getElementById('meme-modal-inner')
 const memeModal = document.getElementById('meme-modal')
 const memeModalCloseBtn = document.getElementById("meme-modal-close-btn")
 
+getImageBtn.addEventListener('click', renderCat)
+EmotionRadiosDiv.addEventListener("change", highlightCheckedOption)
+memeModalCloseBtn.addEventListener('click', function() {
+    memeModal.style.display = 'none'
+})
+
 function getEmotionsArray(cats){
     const emotionsArray = []
     for (let cat of cats) {
@@ -18,8 +24,6 @@ function getEmotionsArray(cats){
     }
     return emotionsArray
 }
-
-getImageBtn.addEventListener('click', renderCat)
 
 function getMatchingCatsArray(e) {
     const selectedItem = document.querySelector('input[type="radio"]:checked')
@@ -41,8 +45,6 @@ function getMatchingCatsArray(e) {
     }
 }
 
-EmotionRadiosDiv.addEventListener("change", highlightCheckedOption)
-
 function highlightCheckedOption(e){
 
     const radioItems = document.getElementsByClassName("radio")
@@ -53,13 +55,6 @@ function highlightCheckedOption(e){
     console.log(e.target.id)
 }
 
-memeModalCloseBtn.addEventListener('click', function() {
-    memeModal.style.display = 'none'
-})
-function myFunction() {
-    alert("hello")
-}
-window.myFunction = myFunction
 function getSingleCat() {
     const catsArray = getMatchingCatsArray()
     if(catsArray.length===1) {
